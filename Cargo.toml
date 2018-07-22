@@ -1,6 +1,6 @@
 [package]
 name = "lib_blaster"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["LEXUGE <LEXUGEyky@outlook.com>"]
 description = "The backend of blaster (a SYN flood tool)"
 license = "AGPL-3.0"
