@@ -14,8 +14,18 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with lib_blaster.  If not, see <https://www.gnu.org/licenses/>.
 
+//! The packet-information collector
+
 use std::net::Ipv4Addr;
 
+/// The packet-information collector
+///
+/// The meaning of each field:
+///
+/// - src_ip: source IP address of IP header
+/// - dst_ip: destination IP address of IP header
+/// - src_port: source port of TCP header
+/// - dst_port: destination port of TCP header
 pub struct Collector {
     pub src_ip: Ipv4Addr,
     pub dst_ip: Ipv4Addr,

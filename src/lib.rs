@@ -14,11 +14,19 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with lib_blaster.  If not, see <https://www.gnu.org/licenses/>.
 
+//! # lib_blaster
+//! The backend of blaster (a SYN flood tool)
+//!
+//! This library is using `libpnet` framework. And it only supports Linux now.
+//!  
+//! It can send about 33079 packets per second, which is very fast. And it can do it with low CPU usage.
+
+extern crate pnet_macros_support;
 extern crate pnet_packet;
 extern crate pnet_transport;
 extern crate rand;
 
-mod builder;
+pub mod builder;
 pub mod collector;
 pub mod sender;
 pub mod tools;

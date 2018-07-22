@@ -1,12 +1,13 @@
 [package]
 name = "lib_blaster"
-version = "0.1.2"
+version = "0.2.0"
 authors = ["LEXUGE <LEXUGEyky@outlook.com>"]
 description = "The backend of blaster (a SYN flood tool)"
 license = "AGPL-3.0"
 repository = "https://github.com/LEXUGE/lib_blaster"
 
 [dependencies]
+pnet_macros_support = "0.21"
 pnet_packet = "0.21"
 pnet_transport = "0.21"
 rand = "0.5"

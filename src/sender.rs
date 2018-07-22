@@ -14,19 +14,19 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with lib_blaster.  If not, see <https://www.gnu.org/licenses/>.
 
-use super::builder::build_pkt;
-use super::collector::Collector;
+//! The packet sender
+
+use super::builder::Pkt;
 use pnet_packet::ip::IpNextHeaderProtocols::Tcp;
 use pnet_transport::transport_channel;
 use pnet_transport::TransportChannelType::Layer3;
 use std::io;
 use std::net::IpAddr;
 
-pub fn send_syn(collector: &Collector) -> Result<(), io::Error> {
+/// Send the SYN packets
+pub fn send_syn(packet: &Pkt) -> Result<(), io::Error> {
     let (mut tx, _) = transport_channel(100, Layer3(Tcp))?;
-    let mut packet = [0u8; 40];
-    let packet = build_pkt(collector, &mut packet)?;
-    match tx.send_to(packet, IpAddr::V4(collector.dst_ip)) {
+    match tx.send_to(packet.to_one_packet()?, IpAddr::V4(packet.get_dst_ip())) {
         Ok(_) => Ok(()),
         Err(e) => Err(e),
     }
