@@ -18,16 +18,31 @@
 
 use super::builder::Pkt;
 use pnet_packet::ip::IpNextHeaderProtocols::Tcp;
+use pnet_transport;
 use pnet_transport::transport_channel;
 use pnet_transport::TransportChannelType::Layer3;
 use std::io;
 use std::net::IpAddr;
 
-/// Send the SYN packets
-pub fn send_syn(packet: &Pkt) -> Result<(), io::Error> {
-    let (mut tx, _) = transport_channel(100, Layer3(Tcp))?;
-    match tx.send_to(packet.to_one_packet()?, IpAddr::V4(packet.get_dst_ip())) {
-        Ok(_) => Ok(()),
-        Err(e) => Err(e),
+/// A Sender struct which contains Layer3 channel
+pub struct Sender {
+    tx: pnet_transport::TransportSender,
+}
+
+impl Sender {
+    /// Create a sender
+    pub fn new() -> Result<Self, io::Error> {
+        let (tx, _) = transport_channel(100, Layer3(Tcp))?;
+        Ok(Self { tx })
+    }
+
+    /// Send the SYN packets
+    pub fn send_syn(&mut self, packet: &Pkt) -> Result<(), io::Error> {
+        match self.tx
+            .send_to(packet.to_one_packet()?, IpAddr::V4(packet.get_dst_ip()))
+        {
+            Ok(_) => Ok(()),
+            Err(e) => Err(e),
+        }
     }
 }
